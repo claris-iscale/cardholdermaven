@@ -26,9 +26,9 @@ public class settings {
 	   public boolean skipTest(String testCase) {
 		   boolean runTestCase;
 		   switch (testCase) {
-           case "registrationTest": runTestCase = false; //done
+           case "registrationTest": runTestCase = false; //done - fixed
         	   	break;
-           case "loginTest": runTestCase = true;//done
+           case "loginTest": runTestCase = false;//done
    	   			break;
            case "accountTest": runTestCase = false;//done
    	   			break;  
@@ -46,19 +46,18 @@ public class settings {
 	   			break;
            case "viewImageTest": runTestCase = false;// fixed - 10//11/2018
 	   			break;
-           case "orderCardEUTest": runTestCase = false;
+           case "orderCardEUTest": runTestCase = false; // done- document
   				break;
-           case "orderCardTest1": runTestCase = false;//done
-	   			break;
-           case "orderCardNonEUTest": runTestCase = false;//
-	   			break;
-           case "loadByCardEUTest": runTestCase = false;//
-	   			break;
-           case "loadByCardNonEUTest": runTestCase = false;//
-	   			break;
-           case "orderCardTest": runTestCase = false;//
+           case "orderCardNonEUTest": runTestCase = false;// done document -fixed 10/15/2018
+  				break;
+           case "loadByCardEUTest": runTestCase = false;// to fix - done documented -fixed 10/15/2018
+  				break;
+           case "loadByCardNonEUTest": runTestCase = true;// to ask lea  // false
   			break;
-	   			
+           case "orderCardTest": runTestCase = false;// done - document - working
+ 			break;
+           case "orderCardTest1": runTestCase = false;//done - document - working
+	   			break;
            default:  runTestCase = true;
                     break;
 		   }

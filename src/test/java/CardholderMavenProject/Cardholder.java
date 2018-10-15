@@ -2,14 +2,14 @@ package CardholderMavenProject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.jupiter.api.AfterAll;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
 
 public class Cardholder  {
 	//For Chrome Driver
-	WebDriver driver;
+//	WebDriver driver;
 	//For FireFox Driver
 	//driver = new firefoxDriver();
 	settings testSettings = new settings();
@@ -34,7 +34,7 @@ public class Cardholder  {
 		System.setProperty("webdriver.chrome.driver","C:\\Users\\Iscale Dev 1\\git\\cardholderMaven\\chromedriver.exe");
 	}
 	
-	public  WebDriver driverProgram,driverRegister;
+//	public  WebDriver driver,driverRegister;
 	public  WebDriverWait wait;
 	public  String User = "G00003@100002.com";
 	public  String Pass = "@Password123";
@@ -60,9 +60,8 @@ public class Cardholder  {
 
 @Test (priority = settings.registrationTest , alwaysRun = true)
 	  public void Registration() {
-		settings testSettings = new settings();
 		 if(testSettings.skipTest("registrationTest")){
-			 
+			 System.out.println("Now on Registration Page");
 //			 InputValidationTestCase InputValidation = new InputValidationTestCase();
 			
 			//** FOR FIREFOX BROWSER **//
@@ -70,30 +69,31 @@ public class Cardholder  {
 			//********************************** //	 
 				
 			//** FOR CHROME BROWSER ** //
-			//**********************************//	   
+			//**********************************//	 
+			 WebDriver driver= new ChromeDriver();
+				
+			   wait = new WebDriverWait(driver, 20); 
 			   
-			   wait = new WebDriverWait(driverRegister, 20);   
-			   
-			   driverRegister.manage().window().maximize();
-			   driverRegister.get("https://dev.cardholder.an-other.co.uk/user/register/glenmore-consultants-ltd");
+			   driver.manage().window().maximize();
+			   driver.get("https://dev.cardholder.an-other.co.uk/user/register/glenmore-consultants-ltd");
 				
 			   //Fill-up Form"			
-				Select dropdownTitle = new Select(driverRegister.findElement(By.name("RegistrationForm[title]")));									
-				WebElement ParseFirstName = driverRegister.findElement (By.name("RegistrationForm[firstname]"));
-				WebElement ParselastName = driverRegister.findElement (By.name("RegistrationForm[lastname]"));
-				WebElement CheckGender = new WebDriverWait(driverRegister, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"registrationform-sex\"]/label[2]/input")));								
+				Select dropdownTitle = new Select(driver.findElement(By.name("RegistrationForm[title]")));									
+				WebElement ParseFirstName = driver.findElement (By.name("RegistrationForm[firstname]"));
+				WebElement ParselastName = driver.findElement (By.name("RegistrationForm[lastname]"));
+				WebElement CheckGender = new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"registrationform-sex\"]/label[2]/input")));								
 				
-				Select dropdownDay = new Select(driverRegister.findElement(By.xpath("//*[@id=\"date-dd\"]")));			
-				Select dropdownMonth = new Select(driverRegister.findElement(By.xpath("//*[@id=\"date-mm\"]")));			
-				Select dropdownYear = new Select(driverRegister.findElement(By.xpath("//*[@id=\"date-yyyy\"]")));			
-				WebElement ParseAddress1 = driverRegister.findElement (By.name("RegistrationForm[address1]"));
-				WebElement ParseCity = driverRegister.findElement (By.name("RegistrationForm[city]"));
-				WebElement ParseZipCode = driverRegister.findElement (By.name("RegistrationForm[postcode]"));
-				Select dropdownCountry = new Select(driverRegister.findElement(By.name("RegistrationForm[country]")));			
-				WebElement ParseMobile = driverRegister.findElement (By.name("RegistrationForm[mobile_number]"));
-				WebElement ParseEmail = driverRegister.findElement (By.name("RegistrationForm[email]"));
-				WebElement ParseCaptha = driverRegister.findElement (By.name("RegistrationForm[verifyCode]"));
-				WebElement register = driverRegister.findElement(By.xpath("//*[@id=\"RegistrationForm\"]/button"));
+				Select dropdownDay = new Select(driver.findElement(By.xpath("//*[@id=\"date-dd\"]")));			
+				Select dropdownMonth = new Select(driver.findElement(By.xpath("//*[@id=\"date-mm\"]")));			
+				Select dropdownYear = new Select(driver.findElement(By.xpath("//*[@id=\"date-yyyy\"]")));			
+				WebElement ParseAddress1 = driver.findElement (By.name("RegistrationForm[address1]"));
+				WebElement ParseCity = driver.findElement (By.name("RegistrationForm[city]"));
+				WebElement ParseZipCode = driver.findElement (By.name("RegistrationForm[postcode]"));
+				Select dropdownCountry = new Select(driver.findElement(By.name("RegistrationForm[country]")));			
+				WebElement ParseMobile = driver.findElement (By.name("RegistrationForm[mobile_number]"));
+				WebElement ParseEmail = driver.findElement (By.name("RegistrationForm[email]"));
+				WebElement ParseCaptha = driver.findElement (By.name("RegistrationForm[verifyCode]"));
+				WebElement register = driver.findElement(By.xpath("//*[@id=\"RegistrationForm\"]/button"));
 				WebElement agree = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"registrationform-agreed_to_terms\"]")));
 				
 				dropdownTitle.selectByValue("Miss");
@@ -125,12 +125,12 @@ public class Cardholder  {
 				
 				register.click();
 				
-				wait = new WebDriverWait(driverRegister, 30);   
+				wait = new WebDriverWait(driver, 30);   
 				WebElement ParseRegistrationStatus =  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"w0\"]"))); 
 				String registrationStatus = ParseRegistrationStatus.getText();
 				System.out.println(registrationStatus);
 				Assert.assertTrue(registrationStatus.contains("Your account has been created and a message with further instructions has been sent to your email."));
-							 
+				driver.quit();
 		}
 		 
 		 else{
@@ -1039,30 +1039,36 @@ public void OrderCardEU(){
 
 @Test (priority = settings.orderCardNonEUTest, alwaysRun = true)	
 public void OrderCardNonEU(){
-	System.out.println("Now on orderCardNonEUTest");
-//	if (driver != null)
-//		driver.quit();
-	
-	settings testSettings = new settings();
 	if(testSettings.skipTest("orderCardNonEUTest")){
-		//** FOR CHROME BROWSER ** //
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\Iscale Dev 1\\git\\cardholderMaven\\chromedriver.exe");
-		driver = new ChromeDriver();
-		//**********************************//	   
-		
+		System.out.println("Now on orderCardNonEUTest");
+		WebDriver driver= new ChromeDriver();
 		wait = new WebDriverWait(driver, 20);   
-			   
-		driver.manage().window().maximize();
-		driver.get("https://dev.cardholder.an-other.co.uk/");
-
-		WebElement SignIn1 = driver.findElement(By.xpath("//*[@id=\"LoginForm\"]/button"));
-		WebElement Username1 = driver.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
-		Username1.sendKeys(NonEUUser);
-		WebElement Password1 = driver.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
-		Password1.sendKeys(NonEUPass);
-		SignIn1.click();
-			   
-		// wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
+		   
+		   driver.manage().window().maximize();
+		   driver.get("https://dev.cardholder.an-other.co.uk/");
+		   try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+			WebElement LoginLogo = driver.findElement (By.cssSelector("img[class='login-logo']"));
+			Assert.assertTrue(LoginLogo.isDisplayed());
+			
+			
+		   WebElement SignIn1 = driver.findElement(By.xpath("//*[@id=\"LoginForm\"]/button"));
+		   WebElement Username1 = driver.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
+		   Username1.sendKeys(User);
+		   WebElement Password1 = driver.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
+		   Password1.sendKeys(Pass);
+		   SignIn1.click();
+		   
+		   
+		   wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
+		   
+//		   Select dropdownProgram = new Select(driver.findElement(By.name("program")));
+//		   dropdownProgram.selectByValue("100003");
+		   wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
+		   
 			   
 
 		WebElement orderButton =  new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-default btn-activate-new-card']")));
@@ -1085,14 +1091,14 @@ public void OrderCardNonEU(){
 		Submit.click();
 		wait = new WebDriverWait(driver, 30);
 			
-		WebElement agree = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[id='loadcard-agreed_to_terms']")));
-		agree.click();
-			
-		WebElement payment = driver.findElement(By.cssSelector("button[class='btn btn-default btn-pay-order-card']"));
-		payment.click();
+//		WebElement agree = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[id='loadcard-agreed_to_terms']")));
+//		agree.click();
+//			
+//		WebElement payment = driver.findElement(By.cssSelector("button[class='btn btn-default btn-pay-order-card']"));
+//		payment.click();
 			
 		//For nonEu members, ordering card will skip the cashflow payment page
-		wait = new WebDriverWait(driver, 30);
+		wait = new WebDriverWait(driver, 40);
 		WebElement displayCard = wait.until(ExpectedConditions.visibilityOfElementLocated( By.id("card-image-frame")));
 			
 		if(displayCard.isEnabled()) {
@@ -1103,11 +1109,11 @@ public void OrderCardNonEU(){
 						.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"w0\"]")));
 			String OrderCardStatus = ParseOrderCardStatus.getText();
 			Assert.assertTrue(OrderCardStatus.contains("Card successfully created! Please wait for the popup to view the card image or click the link below the card number."));
-			Assert.assertTrue(OrderCardStatus.contains("Thank you for your order. You will receive a call from our call center to process the payment."));
 				
 		}else {
 			System.out.println("Error with reference.");
 		}
+		driver.quit();
 	}else{
 		throw new SkipException("Skipping orderCardNonEUTest case. ");
 	}	
@@ -1115,38 +1121,39 @@ public void OrderCardNonEU(){
 
 @Test (priority = settings.loadByCardEUTest, alwaysRun = true)
 public void LoadByCardEU() {	
-	System.out.println("Now on loadByCardEUTest");
+	
 //	String programName,TotalAmount,TotalText,cardNumber;
-	String programName,TotalAmount,TotalText,cardNumber;
+	String cardNumber;
 	String inputAmount = "50";
-	double Total;
-	double LoadAmountInt;
-	double Fee;
-	double percent = 0.02;
-	double loadFee = 2;
-	
-//	if (driver != null)
-//		driver.quit();
-	
-	
-	settings testSettings = new settings();
 	if(testSettings.skipTest("loadByCardEUTest")){
-		//** FOR CHROME BROWSER ** //
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\Iscale Dev 1\\git\\cardholderMaven\\chromedriver.exe");
-//		driver = new ChromeDriver();
-		//**********************************//	   
-		
+		System.out.println("Now on loadByCardEUTest");
+		WebDriver driver= new ChromeDriver();
 		wait = new WebDriverWait(driver, 20);   
 		   
-		driver.manage().window().maximize();
-		driver.get("https://dev.cardholder.an-other.co.uk/");
-
-		WebElement SignIn1 = driver.findElement(By.xpath("//*[@id=\"LoginForm\"]/button"));
-		WebElement Username1 = driver.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
-		Username1.sendKeys(EUUser);
-		WebElement Password1 = driver.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
-		Password1.sendKeys(EUPass);
-		SignIn1.click();
+		   driver.manage().window().maximize();
+		   driver.get("https://dev.cardholder.an-other.co.uk/");
+		   try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+			WebElement LoginLogo = driver.findElement (By.cssSelector("img[class='login-logo']"));
+			Assert.assertTrue(LoginLogo.isDisplayed());
+			
+			
+		   WebElement SignIn1 = driver.findElement(By.xpath("//*[@id=\"LoginForm\"]/button"));
+		   WebElement Username1 = driver.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
+		   Username1.sendKeys(EUUser);
+		   WebElement Password1 = driver.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
+		   Password1.sendKeys(EUPass);
+		   SignIn1.click();
+		   
+		   
+		   wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
+		   
+		   Select dropdownProgram = new Select(driver.findElement(By.name("program")));
+		   dropdownProgram.selectByValue("100003");
+		   wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
 		   
 		wait = new WebDriverWait(driver, 30);
 		WebElement loadedCard = new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"prepaid-cards-container\"]/table/tbody/tr[1]/td[1]/span")));
@@ -1170,24 +1177,9 @@ public void LoadByCardEU() {
 		WebElement agreeTerms = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[id='loadcard-agreed_to_terms']")));
 		agreeTerms.click();
 		
-		LoadAmountInt = Double.parseDouble(inputAmount);
-		
-		//programName = driver.findElement(By.cssSelector("span[class='filter-option pull-left']")).getText();
-		
-		//if(programName.equals("Global Sourcing Solutions"))
-		//{
-			Fee = ((LoadAmountInt * percent) + LoadAmountInt) ;
-			
-//			Total = Fee + loadFee;
-			
-//			TotalText = Double.toString(Total);
-			WebElement ParseTotalAmount = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#load-card-form > h3.load-total")));
-			TotalAmount = ParseTotalAmount.getText();
-			
-			//Assert.assertTrue(TotalAmount.contains(TotalText));		
-		//}
-		
-		
+		Double.parseDouble(inputAmount);
+		WebElement ParseTotalAmount = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#load-card-form > h3.load-total")));
+		ParseTotalAmount.getText();
 		WebElement Proceed = driver.findElement(By.cssSelector("button[class='btn btn-default btn-pay']"));
 		Proceed.click();
 		
@@ -1223,37 +1215,36 @@ public void LoadByCardEU() {
 		System.out.println(unloadStatus);
 		Assert.assertTrue(unloadStatus.contains("Your funds will be on your card shortly."));
 		
-		//Check Programs if load request created record in payment request
-	
-		   System.setProperty("webdriver.chrome.driver","C:\\Users\\Iscale Dev 1\\git\\cardholderMaven\\chromedriver.exe");
-//		   driverProgram = new ChromeDriver();
-		
-		wait = new WebDriverWait(driverProgram, 20);   
+		driver.navigate().to("https://dev.program.an-other.co.uk/");
+		 try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		   
-		driverProgram.manage().window().maximize();
-		driverProgram.get("https://dev.program.an-other.co.uk/");
-		   
-			WebElement LoginLogo = driverProgram.findElement (By.cssSelector("img[class='login-logo']"));
-			Assert.assertTrue(LoginLogo.isDisplayed());			
-			WebElement SignIn2 =  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"LoginForm\"]/button")));
-			   WebElement Username2 = driverProgram.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
+			WebElement LoginLogo1 = driver.findElement(By.className("login-logo"));
+			Assert.assertTrue(LoginLogo1.isDisplayed());			
+			WebElement Username2 = driver.findElement(By.id("loginform-login"));
+			WebElement Password2 = driver.findElement(By.id("loginform-password"));
+			WebElement SignIn2 = driver.findElement(By.cssSelector("button.btn.btn-primary.btn-block"));
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
 			   Username2.sendKeys(userProgram);
-			   WebElement Password2 = driverProgram.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
 			   Password2.sendKeys(passProgram);
 			   SignIn2.click();
-			   
-			   wait = new WebDriverWait(driverProgram, 30);   
+			   wait = new WebDriverWait(driver, 30);   
 			   wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
-			   Select dropdownProgram = new Select(driverProgram.findElement(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
-			   dropdownProgram.selectByValue("100003");
+			   Select dropdownProgram1 = new Select(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
+			   dropdownProgram1.selectByValue("100003");
 			   
 			   wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
 			   
-			 //LoginPage User
 			 	String AccountVisible;
-			 			
-			 	
-			 	AccountVisible = driverProgram.findElement(By.cssSelector("a[href='/user/settings/account']")).getAttribute("innerHTML");
+			 	AccountVisible = driver.findElement(By.cssSelector("a[href='/user/settings/account']")).getAttribute("innerHTML");
 			 	
 			 	if (AccountVisible.equals(userProgram))
 			 	{
@@ -1264,32 +1255,19 @@ public void LoadByCardEU() {
 			 		System.out.println("ERROR");
 			 	}
 			 	
-			 	//Payments	#w0 > li:nth-child(2) 
-				/*WebElement Payment = driverProgram.findElement(By.cssSelector("#w0 > li:nth-child(2) > a"));
-				Payment.click();
-				
-				WebElement SendPayment = driverProgram.findElement(By.cssSelector("#w1 > li:nth-child(1) > a"));
-				SendPayment.click();
-				
-				WebElement CardNumber = driverProgram.findElement(By.name("PaymentRequestSearch[card_number]"));
-				CardNumber.sendKeys(cardNumber);
-				
-				//wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
-				Select paymentType = new Select(driverProgram.findElement(By.name("PaymentRequestSearch[type]")));
-				paymentType.selectByValue("cashflows_payment");
-				wait = new WebDriverWait(driverProgram, 30);*/
-			 	
-			 	driverProgram.get("https://dev.program.an-other.co.uk/payment-request?PaymentRequestSearch[payment_request_id]=&PaymentRequestSearch[card_number]="+cardNumber+"&PaymentRequestSearch[type]=cashflows_payment&PaymentRequestSearch[fname]=&PaymentRequestSearch[lname]=&sort=-payment_request_id");
-			 					
-				//if (wait.until(ExpectedConditions.urlContains("PaymentRequestSearch[payment_request_id]=&&PaymentRequestSearch%5Bcard_number%5D="+cardNumber+"&PaymentRequestSearch%5Btype%5D=cashflows_payment"))) {
-					WebElement baseTable = driverProgram.findElement(By.xpath("//*[@id=\"table-payment-requests-pjax\"]"));
-					WebElement LoadValue = baseTable.findElement(By.xpath("//*[@id=\"table-payment-requests-container\"]/table/tbody/tr/td[7]"));
-										
+			 	((JavascriptExecutor)driver).executeScript("window.open()");
+			    ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+			    driver.switchTo().window(tabs.get(1));
+			 	driver.get("https://dev.program.an-other.co.uk/payment-request?PaymentRequestSearch%5Bpayment_request_id%5D=&PaymentRequestSearch%5Bcard_number%5D="+cardNumber+"&PaymentRequestSearch%5Btype%5D=cashflows_payment&PaymentRequestSearch%5Bfname%5D=&PaymentRequestSearch%5Blname%5D=");
+			 	try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+					WebElement LoadValue = driver.findElement(By.cssSelector("tbody"));
 					System.out.println(LoadValue.getText());
 					Assert.assertTrue(LoadValue.getText().contains(inputAmount+".00"));		
-					
-				//}
-//				driverProgram.quit();
+				driver.quit();
 	}else{
 		throw new SkipException("Skipping loadByCardEUTest case. ");
 	}
@@ -1300,35 +1278,42 @@ public void LoadByCardEU() {
 @Test (priority = settings.loadByCardNonEUTest, alwaysRun = true)
 public void LoadByCardNonEU() {	
 	System.out.println("Now on loadByCardNonEUTest");
-	String programName,TotalAmount,TotalText,cardNumber;
-	String inputAmount = "50";
+	String cardNumber;
+	String inputAmount = "40";
 	double Total;
 	double LoadAmountInt;
 	double Fee;
 	double percent = 0.02;
 	double loadFee = 2;
-	
-//	if (driver != null) {
-//		driver.quit();
-//	}
-	
-	settings testSettings = new settings();
 	if(testSettings.skipTest("loadByCardNonEUTest")){
-		
-	//** FOR CHROME BROWSER ** //
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\Iscale Dev 1\\git\\cardholderMaven\\chromedriver.exe");
-		driver = new ChromeDriver();
-	//**********************************//	   
-		wait = new WebDriverWait(driver, 20);  
-		driver.manage().window().maximize();
-		driver.get("https://dev.cardholder.an-other.co.uk/");
-
-		WebElement SignIn1 = driver.findElement(By.xpath("//*[@id=\"LoginForm\"]/button"));
-		WebElement Username1 = driver.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
-		Username1.sendKeys(NonEUUser);
-		WebElement Password1 = driver.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
-		Password1.sendKeys(NonEUPass);
-		SignIn1.click();
+		System.out.println("Now on LoadByCardNonEuTest");
+		WebDriver driver= new ChromeDriver();
+		wait = new WebDriverWait(driver, 20);   
+		   
+		   driver.manage().window().maximize();
+		   driver.get("https://dev.cardholder.an-other.co.uk/");
+		   try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+			WebElement LoginLogo = driver.findElement (By.cssSelector("img[class='login-logo']"));
+			Assert.assertTrue(LoginLogo.isDisplayed());
+			
+			
+		   WebElement SignIn1 = driver.findElement(By.xpath("//*[@id=\"LoginForm\"]/button"));
+		   WebElement Username1 = driver.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
+		   Username1.sendKeys(User);
+		   WebElement Password1 = driver.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
+		   Password1.sendKeys(Pass);
+		   SignIn1.click();
+		   
+		   
+		   wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
+		   
+//		   Select dropdownProgram = new Select(driver.findElement(By.name("program")));
+//		   dropdownProgram.selectByValue("100003");
+		   wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
 		
 		wait = new WebDriverWait(driver, 30);
 		WebElement loadedCard = new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"prepaid-cards-container\"]/table/tbody/tr[1]/td[1]/span")));
@@ -1347,7 +1332,7 @@ public void LoadByCardNonEU() {
 		WebElement loadAmount = driver.findElement(By.xpath("//*[@id=\"load-amount\"]"));
 		loadAmount.sendKeys(inputAmount);	
 		
-		loadAmount.sendKeys(Keys.ENTER);			
+//		loadAmount.sendKeys(Keys.ENTER);			
 		
 		WebElement agreeTerms = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[id='loadcard-agreed_to_terms']")));
 		agreeTerms.click();
@@ -1362,9 +1347,9 @@ public void LoadByCardNonEU() {
 			
 			Total = Fee + loadFee;
 			
-			TotalText = Double.toString(Total);
+			Double.toString(Total);
 			WebElement ParseTotalAmount = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#load-card-form > h3.load-total")));
-			TotalAmount = ParseTotalAmount.getText();
+			ParseTotalAmount.getText();
 			
 			//Assert.assertTrue(TotalAmount.contains(TotalText));		
 		//}
@@ -1381,37 +1366,37 @@ public void LoadByCardNonEU() {
 		System.out.println(loadStatus+"aa");
 		Assert.assertTrue(loadStatus.contains("You will receive a call from our call center to process the payment."));
 		
-		//Check Programs if load request created record in payment request
-	
-		   System.setProperty("webdriver.chrome.driver","C:\\Users\\Iscale Dev 1\\git\\cardholderMaven\\chromedriver.exe");
-		   driverProgram = new ChromeDriver();
-		
-		wait = new WebDriverWait(driverProgram, 20);   
+		//Check if load request create record to program
+		driver.navigate().to("https://dev.program.an-other.co.uk/");
+		 try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		   
-		driverProgram.manage().window().maximize();
-		driverProgram.get("https://dev.program.an-other.co.uk/");
-		   
-			WebElement LoginLogo = driverProgram.findElement (By.cssSelector("img[class='login-logo']"));
-			Assert.assertTrue(LoginLogo.isDisplayed());			
-			WebElement SignIn2 =  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"LoginForm\"]/button")));
-			   WebElement Username2 = driverProgram.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
+			WebElement LoginLogo1 = driver.findElement(By.className("login-logo"));
+			Assert.assertTrue(LoginLogo1.isDisplayed());			
+			WebElement Username2 = driver.findElement(By.id("loginform-login"));
+			WebElement Password2 = driver.findElement(By.id("loginform-password"));
+			WebElement SignIn2 = driver.findElement(By.cssSelector("button.btn.btn-primary.btn-block"));
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
 			   Username2.sendKeys(userProgram);
-			   WebElement Password2 = driverProgram.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
 			   Password2.sendKeys(passProgram);
 			   SignIn2.click();
-			   
-			   wait = new WebDriverWait(driverProgram, 30);   
+			   wait = new WebDriverWait(driver, 30);   
 			   wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
-			   Select dropdownProgram = new Select(driverProgram.findElement(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
-			   dropdownProgram.selectByValue("100003");
+			   Select dropdownProgram1 = new Select(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
+			   dropdownProgram1.selectByValue("100003");
 			   
 			   wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
 			   
-			 //LoginPage User
 			 	String AccountVisible;
-			 			
-			 	
-			 	AccountVisible = driverProgram.findElement(By.cssSelector("a[href='/user/settings/account']")).getAttribute("innerHTML");
+			 	AccountVisible = driver.findElement(By.cssSelector("a[href='/user/settings/account']")).getAttribute("innerHTML");
 			 	
 			 	if (AccountVisible.equals(userProgram))
 			 	{
@@ -1422,32 +1407,87 @@ public void LoadByCardNonEU() {
 			 		System.out.println("ERROR");
 			 	}
 			 	
-			 	//Payments	#w0 > li:nth-child(2) 
-				/*WebElement Payment = driverProgram.findElement(By.cssSelector("#w0 > li:nth-child(2) > a"));
-				Payment.click();
-				
-				WebElement SendPayment = driverProgram.findElement(By.cssSelector("#w1 > li:nth-child(1) > a"));
-				SendPayment.click();
-				
-				WebElement CardNumber = driverProgram.findElement(By.name("PaymentRequestSearch[card_number]"));
-				CardNumber.sendKeys(cardNumber);
-				
-				//wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
-				Select paymentType = new Select(driverProgram.findElement(By.name("PaymentRequestSearch[type]")));
-				paymentType.selectByValue("cashflows_payment");
-				wait = new WebDriverWait(driverProgram, 30);*/
-			 	
-			 	driverProgram.get("https://dev.program.an-other.co.uk/payment-request?PaymentRequestSearch[payment_request_id]=&PaymentRequestSearch[card_number]="+cardNumber+"&PaymentRequestSearch[type]=cashflows_payment&PaymentRequestSearch[fname]=&PaymentRequestSearch[lname]=&sort=-payment_request_id");
-			 					
-				//if (wait.until(ExpectedConditions.urlContains("PaymentRequestSearch[payment_request_id]=&&PaymentRequestSearch%5Bcard_number%5D="+cardNumber+"&PaymentRequestSearch%5Btype%5D=cashflows_payment"))) {
-					WebElement baseTable = driverProgram.findElement(By.xpath("//*[@id=\"table-payment-requests-pjax\"]"));
-					WebElement LoadValue = baseTable.findElement(By.xpath("//*[@id=\"table-payment-requests-container\"]/table/tbody/tr/td/div"));
-										
+			 	((JavascriptExecutor)driver).executeScript("window.open()");
+			    ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+			    driver.switchTo().window(tabs.get(1));
+			 	driver.get("https://dev.program.an-other.co.uk/payment-request?PaymentRequestSearch%5Bpayment_request_id%5D=&PaymentRequestSearch%5Bcard_number%5D="+cardNumber+"&PaymentRequestSearch%5Btype%5D=cashflows_payment&PaymentRequestSearch%5Bfname%5D=&PaymentRequestSearch%5Blname%5D=");
+			 	try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+					WebElement LoadValue = driver.findElement(By.cssSelector("tbody"));
 					System.out.println(LoadValue.getText());
-					Assert.assertTrue(LoadValue.getText().contains("No results found.")); //there should no record inserted. load payment will be manually created after NonEu Member pays the amount.
-					
+					Assert.assertTrue(LoadValue.getText().contains(inputAmount+".00"));		
+				driver.quit();
+		
+		
+		//Check Programs if load request created record in payment request
+//	
+//		   System.setProperty("webdriver.chrome.driver","C:\\Users\\Iscale Dev 1\\git\\cardholderMaven\\chromedriver.exe");
+//		
+//		wait = new WebDriverWait(driver, 20);   
+//		   
+//		driver.manage().window().maximize();
+//		driver.get("https://dev.program.an-other.co.uk/");
+//		   
+//			WebElement LoginLogo1 = driver.findElement (By.cssSelector("img[class='login-logo']"));
+//			Assert.assertTrue(LoginLogo1.isDisplayed());			
+//			WebElement SignIn2 =  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"LoginForm\"]/button")));
+//			   WebElement Username2 = driver.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
+//			   Username2.sendKeys(userProgram);
+//			   WebElement Password2 = driver.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
+//			   Password2.sendKeys(passProgram);
+//			   SignIn2.click();
+//			   
+//			   wait = new WebDriverWait(driver, 30);   
+//			   wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
+//			   Select s = new Select(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
+//			   s.selectByValue("100003");
+//			   
+//			   wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
+//			   
+//			 //LoginPage User
+//			 	String AccountVisible;
+//			 			
+//			 	
+//			 	AccountVisible = driver.findElement(By.cssSelector("a[href='/user/settings/account']")).getAttribute("innerHTML");
+//			 	
+//			 	if (AccountVisible.equals(userProgram))
+//			 	{
+//			 		
+//			 	}
+//			 	else
+//			 	{
+//			 		System.out.println("ERROR");
+//			 	}
+//			 	
+//			 	//Payments	#w0 > li:nth-child(2) 
+//				/*WebElement Payment = driver.findElement(By.cssSelector("#w0 > li:nth-child(2) > a"));
+//				Payment.click();
+//				
+//				WebElement SendPayment = driver.findElement(By.cssSelector("#w1 > li:nth-child(1) > a"));
+//				SendPayment.click();
+//				
+//				WebElement CardNumber = driver.findElement(By.name("PaymentRequestSearch[card_number]"));
+//				CardNumber.sendKeys(cardNumber);
+//				
+//				//wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
+//				Select paymentType = new Select(driver.findElement(By.name("PaymentRequestSearch[type]")));
+//				paymentType.selectByValue("cashflows_payment");
+//				wait = new WebDriverWait(driver, 30);*/
+//			 	
+//			 	driver.get("https://dev.program.an-other.co.uk/payment-request?PaymentRequestSearch[payment_request_id]=&PaymentRequestSearch[card_number]="+cardNumber+"&PaymentRequestSearch[type]=cashflows_payment&PaymentRequestSearch[fname]=&PaymentRequestSearch[lname]=&sort=-payment_request_id");
+//			 					
+//				//if (wait.until(ExpectedConditions.urlContains("PaymentRequestSearch[payment_request_id]=&&PaymentRequestSearch%5Bcard_number%5D="+cardNumber+"&PaymentRequestSearch%5Btype%5D=cashflows_payment"))) {
+////					WebElement baseTable = driver.findElement(By.xpath("//*[@id=\"table-payment-requests-pjax\"]"));
+//					WebElement LoadValue = driver.findElement(By.xpath("//*[@id=\"table-payment-requests-container\"]/table/tbody/tr[1]/td[7]"));
+//										
+//					System.out.println(LoadValue.getText());
+//					Assert.assertTrue(LoadValue.getText().contains("No results found.")); //there should no record inserted. load payment will be manually created after NonEu Member pays the amount.
+//					
 				//}
-//				driverProgram.quit();
+				driver.quit();
 	}else{
 		throw new SkipException("Skipping loadByCardNonEUTest case. ");
 	}
@@ -1456,7 +1496,7 @@ public void LoadByCardNonEU() {
 }
 
 @Test (priority = settings.orderCardTest, alwaysRun = true)	
-public void OrderCard(){
+public void OrderCardTest(){
 	System.out.println("Now on orderCardTest");
 //	if (driver != null)
 //		driver.quit();
@@ -1465,25 +1505,36 @@ public void OrderCard(){
 	
 	settings testSettings = new settings();
 	if(testSettings.skipTest("orderCardTest")){
-	
-		//** FOR CHROME BROWSER ** //
-				System.setProperty("webdriver.chrome.driver","C:\\Users\\Iscale Dev 1\\git\\cardholderMaven\\chromedriver.exe");
-				driver = new ChromeDriver();
-				//**********************************//	   
-				
-				wait = new WebDriverWait(driver, 20);   
+		WebDriver driver= new ChromeDriver();
+		wait = new WebDriverWait(driver, 20);   
+		   
+		   driver.manage().window().maximize();
+		   driver.get("https://dev.cardholder.an-other.co.uk/");
+		   try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+			WebElement LoginLogo = driver.findElement (By.cssSelector("img[class='login-logo']"));
+			Assert.assertTrue(LoginLogo.isDisplayed());
+			
+			
+		   WebElement SignIn1 = driver.findElement(By.xpath("//*[@id=\"LoginForm\"]/button"));
+		   WebElement Username1 = driver.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
+		   Username1.sendKeys(User);
+		   WebElement Password1 = driver.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
+		   Password1.sendKeys(Pass);
+		   SignIn1.click();
+		   
+		   
+		   wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
+		   
+		   Select dropdownProgram = new Select(driver.findElement(By.name("program")));
+		   dropdownProgram.selectByValue("100003");
+		   wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
+		
 				   
-				driver.manage().window().setSize(new Dimension(1944,1084));
-				driver.get("https://dev.cardholder.an-other.co.uk/");
-
-				WebElement SignIn1 = driver.findElement(By.xpath("//*[@id=\"LoginForm\"]/button"));
-				WebElement Username1 = driver.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
-				Username1.sendKeys(EUUser);
-				WebElement Password1 = driver.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
-				Password1.sendKeys(EUPass);
-				SignIn1.click();
-				   
-				driver.get("https://dev.cardholder.an-other.co.uk/");
+//				driver.get("https://dev.cardholder.an-other.co.uk/");
 				wait = new WebDriverWait(driver, 30);
 				WebElement parseIndex = new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"main-content\"]/div[1]/div/h1")));
 				System.out.println(parseIndex.getText());
@@ -1503,6 +1554,9 @@ public void OrderCard(){
 				actions.moveToElement(oCheckBox).click().sendKeys(oCheckBox,Keys.ENTER).perform();*/
 				
 				//oCheckBox.click();
+				WebElement oCheckBox = new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ordercardform-card_type\"]/label[1]/input")));
+				
+				oCheckBox.click();
 				WebElement PINcode = new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[id='ordercardform-pin']")));
 				actions.moveToElement(PINcode).click().sendKeys(PINcode,PIN).perform();
 				//PINcode.sendKeys(PIN);
@@ -1565,7 +1619,7 @@ public void OrderCard(){
 		
 				
 		
-				
+				driver.quit();
 	}else{
 		throw new SkipException("Skipping orderCardTest case. ");
 	}
@@ -1573,12 +1627,36 @@ public void OrderCard(){
 }
 @Test (priority = settings.orderCardTest1, alwaysRun = true)	
 public void OrderCard1(){
-	
-	settings testSettings = new settings();
 	if(testSettings.skipTest("orderCardTest1")){
 		System.out.println("Now on orderCardTest1");
-		this.LoginCall(EUUser,EUPass);
-		
+		WebDriver driver= new ChromeDriver();
+		wait = new WebDriverWait(driver, 20);   
+		   
+		   driver.manage().window().maximize();
+		   driver.get("https://dev.cardholder.an-other.co.uk/");
+		   try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+			WebElement LoginLogo = driver.findElement (By.cssSelector("img[class='login-logo']"));
+			Assert.assertTrue(LoginLogo.isDisplayed());
+			
+			
+		   WebElement SignIn1 = driver.findElement(By.xpath("//*[@id=\"LoginForm\"]/button"));
+		   WebElement Username1 = driver.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
+		   Username1.sendKeys(User);
+		   WebElement Password1 = driver.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
+		   Password1.sendKeys(Pass);
+		   SignIn1.click();
+		   
+		   
+		   wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
+		   
+		   Select dropdownProgram = new Select(driver.findElement(By.name("program")));
+		   dropdownProgram.selectByValue("100003");
+		   wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
+		   
 		WebElement parseIndex = new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"main-content\"]/div[1]/div/h1")));
 		System.out.println(parseIndex.getText());
 		
@@ -1647,6 +1725,7 @@ public void OrderCard1(){
 		}else {
 			System.out.println("Error with reference.");
 		}
+		driver.quit();
 		
 	}else{
 		throw new SkipException("Skipping orderCardTest1 case. ");
@@ -1654,91 +1733,91 @@ public void OrderCard1(){
 }
 
 
-public void LoginCall(String param_user, String param_pass) {
-		   wait = new WebDriverWait(driver, 20);   
-		   
-		   driver.manage().window().maximize();
-		   driver.get("https://dev.cardholder.an-other.co.uk/");
-		   try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-			WebElement LoginLogo = driver.findElement (By.cssSelector("img[class='login-logo']"));
-			Assert.assertTrue(LoginLogo.isDisplayed());
-//			WebElement forgotPassword = driver.findElement (By.xpath("//a[@href='/user/recovery/request']"));
-//			forgotPassword.click();
-//			WebElement ForgotPassword = driver.findElement (By.cssSelector("h3[class='panel-title'"));
-//			WebElement Sumbit = driver.findElement(By.cssSelector ("button[class='btn btn-primary btn-block']"));
-//			if (ForgotPassword.isDisplayed()  &&  Sumbit.isDisplayed() )
-//			{ 
-//				
-//			}
-//			else
-//			{
-//				System.out.println("ERROR");
-//			}
+//public void LoginCall(String param_user, String param_pass) {
+//		   wait = new WebDriverWait(driver, 20);   
+//		   
+//		   driver.manage().window().maximize();
+//		   driver.get("https://dev.cardholder.an-other.co.uk/");
+//		   try {
+//			Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//			WebElement LoginLogo = driver.findElement (By.cssSelector("img[class='login-logo']"));
+//			Assert.assertTrue(LoginLogo.isDisplayed());
+////			WebElement forgotPassword = driver.findElement (By.xpath("//a[@href='/user/recovery/request']"));
+////			forgotPassword.click();
+////			WebElement ForgotPassword = driver.findElement (By.cssSelector("h3[class='panel-title'"));
+////			WebElement Sumbit = driver.findElement(By.cssSelector ("button[class='btn btn-primary btn-block']"));
+////			if (ForgotPassword.isDisplayed()  &&  Sumbit.isDisplayed() )
+////			{ 
+////				
+////			}
+////			else
+////			{
+////				System.out.println("ERROR");
+////			}
+////			
+////		//Navigate Back
+////			driver.navigate().back();
+////			
+////		//Didn't receive confirmation message?
+////			driver.findElement(By.xpath("//*[@id=\"login-panel\"]/div/p/a")).click();
+////			WebElement EmailText = driver.findElement(By.xpath("//*[@id=\"resendform-email\"]"));
+////			WebElement ConfirmButton = driver.findElement(By.xpath("//*[@id=\"ResendForm\"]/button"));
+////			if (EmailText.isDisplayed()  &&  ConfirmButton.isDisplayed())
+////			{ 
+////				
+////			}
+////			else
+////			{
+////				System.out.println("ERROR");
+////			}
+////			
+////		//Navigate Back
+////			driver.navigate().back();
+////			
+////		//Tick "Remember me next time"
+////			WebElement Remember = driver.findElement(By.xpath("//*[@id=\"loginform-rememberme\"]"));
+////			Remember.click();
+////			Assert.assertTrue(Remember.isSelected());
 //			
-//		//Navigate Back
-//			driver.navigate().back();
 //			
-//		//Didn't receive confirmation message?
-//			driver.findElement(By.xpath("//*[@id=\"login-panel\"]/div/p/a")).click();
-//			WebElement EmailText = driver.findElement(By.xpath("//*[@id=\"resendform-email\"]"));
-//			WebElement ConfirmButton = driver.findElement(By.xpath("//*[@id=\"ResendForm\"]/button"));
-//			if (EmailText.isDisplayed()  &&  ConfirmButton.isDisplayed())
-//			{ 
-//				
-//			}
-//			else
-//			{
-//				System.out.println("ERROR");
-//			}
-//			
-//		//Navigate Back
-//			driver.navigate().back();
-//			
-//		//Tick "Remember me next time"
-//			WebElement Remember = driver.findElement(By.xpath("//*[@id=\"loginform-rememberme\"]"));
-//			Remember.click();
-//			Assert.assertTrue(Remember.isSelected());
-			
-			
-		   WebElement SignIn1 = driver.findElement(By.xpath("//*[@id=\"LoginForm\"]/button"));
-		   WebElement Username1 = driver.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
-		   Username1.sendKeys(param_user);
-		   WebElement Password1 = driver.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
-		   Password1.sendKeys(param_pass);
-		   SignIn1.click();
-		   
-		   
-		   wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
-		   
-		   Select dropdownProgram = new Select(driver.findElement(By.name("program")));
-		   dropdownProgram.selectByValue("100003");
-		   wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
-		   
-			 //LoginPage User
-//			 	String AccountVisible;
-//			 	String Verification;
-//			 			
-//			 	
-//			 	AccountVisible = driver.findElement(By.cssSelector("a[href='/user/settings/profile']")).getAttribute("innerHTML");
-//			 	Verification = driver.findElement(By.cssSelector("span[class='card-status verified']")).getAttribute("innerHTML");
-//			 	if (Verification.equals("Verified") && AccountVisible.equals(User))
-//			 	{
-//			 		
-//			 	}
-//			 	else
-//			 	{
-//			 		System.out.println("ERROR");
-//			 	}
-		  
-		 
-//	}else{
-//		throw new SkipException("Skipping LoginTest case. ");
-//	}
-}
+//		   WebElement SignIn1 = driver.findElement(By.xpath("//*[@id=\"LoginForm\"]/button"));
+//		   WebElement Username1 = driver.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
+//		   Username1.sendKeys(param_user);
+//		   WebElement Password1 = driver.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
+//		   Password1.sendKeys(param_pass);
+//		   SignIn1.click();
+//		   
+//		   
+//		   wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[2]/div/div/form/div[1]/select")));
+//		   
+//		   Select dropdownProgram = new Select(driver.findElement(By.name("program")));
+//		   dropdownProgram.selectByValue("100003");
+//		   wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
+//		   
+//			 //LoginPage User
+////			 	String AccountVisible;
+////			 	String Verification;
+////			 			
+////			 	
+////			 	AccountVisible = driver.findElement(By.cssSelector("a[href='/user/settings/profile']")).getAttribute("innerHTML");
+////			 	Verification = driver.findElement(By.cssSelector("span[class='card-status verified']")).getAttribute("innerHTML");
+////			 	if (Verification.equals("Verified") && AccountVisible.equals(User))
+////			 	{
+////			 		
+////			 	}
+////			 	else
+////			 	{
+////			 		System.out.println("ERROR");
+////			 	}
+//		  
+//		 
+////	}else{
+////		throw new SkipException("Skipping LoginTest case. ");
+////	}
+//}
 
 
 }//main
