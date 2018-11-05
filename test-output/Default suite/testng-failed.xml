@@ -5,10 +5,20 @@
     <classes>
       <class name="CardholderMavenProject.Cardholder">
         <methods>
-          <include name="LoadByCardNonEU"/>
+          <include name="Login"/>
           <include name="Suspend"/>
+          <include name="OrderCardEU"/>
           <include name="Profile"/>
+          <include name="Unload"/>
           <include name="Account"/>
+          <include name="OrderCardNonEU"/>
+          <include name="OrderCardTest"/>
+          <include name="ViewImage"/>
+          <include name="OrderCard1"/>
+          <include name="Statement"/>
+          <include name="LoadByBankTransfer"/>
+          <include name="LoadByCardNonEU"/>
+          <include name="LoadByCardEuTest"/>
           <include name="PIN"/>
           <include name="Registration"/>
         </methods>

@@ -28,35 +28,35 @@ public class settings {
 		   switch (testCase) {
            case "registrationTest": runTestCase = false; //done - fixed
         	   	break;
-           case "loginTest": runTestCase = true;//done
+           case "loginTest": runTestCase = false;//done
    	   			break;
            case "accountTest": runTestCase = false;//done
    	   			break;  
            case "profileTest": runTestCase = false;//done
 	   			break;
-           case "loadByBankTransfertest": runTestCase = true;//done
+           case "loadByBankTransfertest": runTestCase = false;//done
    	   			break; 
            case "suspendedTest": runTestCase = false;//done  -- to fix find not suspended card
 	   			break;
            case "pinTest": runTestCase = false;//to fix - done document - need to update data for pin change
 	   			break;
-           case "statementTest": runTestCase = true;//done
+           case "statementTest": runTestCase = false;//done
 	   			break;
-           case "unloadTest": runTestCase = true;//done -- to fix find first card that has available amount
+           case "unloadTest": runTestCase = false;//done -- to fix find first card that has available amount
 	   			break;
-           case "viewImageTest": runTestCase = true;// fixed - 10//11/2018
+           case "viewImageTest": runTestCase = false;// fixed - 10//11/2018
 	   			break;
-           case "orderCardEUTest": runTestCase = true; // done- document
+           case "orderCardEUTest": runTestCase = false; // done- document
   				break;
-           case "orderCardNonEUTest": runTestCase = true;// done document -fixed 10/15/2018
+           case "orderCardNonEUTest": runTestCase = false;// done document -fixed 10/15/2018
   				break;
-           case "loadByCardEUTest": runTestCase = true;// to fix - done documented -fixed 10/15/2018
+           case "loadByCardEUTest": runTestCase = false;// to fix - done documented -fixed 10/15/2018
   				break;
            case "loadByCardNonEUTest": runTestCase = true;// to ask lea  // false
   			break;
-           case "orderCardTest": runTestCase = true;// done - document - working
+           case "orderCardTest": runTestCase = false;// done - document - working
  			break;
-           case "orderCardTest1": runTestCase = true;//done - document - working
+           case "orderCardTest1": runTestCase = false;//done - document - working
 	   			break;
            default:  runTestCase = true;
                     break;

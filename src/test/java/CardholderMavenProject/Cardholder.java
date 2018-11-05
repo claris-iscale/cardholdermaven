@@ -31,7 +31,7 @@ public class Cardholder  {
 	settings testSettings = new settings();
 	@BeforeClass
 	public void setupDriver() {
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\Iscale Dev 1\\git\\cardholderMaven\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver","src\\chromedriver.exe");
 	}
 	
 //	public  WebDriver driver,driverRegister;
@@ -1120,7 +1120,7 @@ public void OrderCardNonEU(){
 }
 
 @Test (priority = settings.loadByCardEUTest, alwaysRun = true)
-public void LoadByCardEU() {	
+public void LoadByCardEuTest() {	
 	
 //	String programName,TotalAmount,TotalText,cardNumber;
 	String cardNumber;
@@ -1258,7 +1258,8 @@ public void LoadByCardEU() {
 			 	((JavascriptExecutor)driver).executeScript("window.open()");
 			    ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
 			    driver.switchTo().window(tabs.get(1));
-			 	driver.get("https://dev.program.an-other.co.uk/payment-request?PaymentRequestSearch%5Bpayment_request_id%5D=&PaymentRequestSearch%5Bcard_number%5D="+cardNumber+"&PaymentRequestSearch%5Btype%5D=cashflows_payment&PaymentRequestSearch%5Bfname%5D=&PaymentRequestSearch%5Blname%5D=");
+//			 	driver.get("https://dev.program.an-other.co.uk/payment-request?PaymentRequestSearch%5Bpayment_request_id%5D=&PaymentRequestSearch%5Bcard_number%5D="+cardNumber+"&PaymentRequestSearch%5Btype%5D=cashflows_payment&PaymentRequestSearch%5Bfname%5D=&PaymentRequestSearch%5Blname%5D=");
+			 	driver.get("https://dev.program.an-other.co.uk/payment-request?PaymentRequestSearch%5Bpayment_request_id%5D=&PaymentRequestSearch%5Bcard_number%5D="+cardNumber+"&PaymentRequestSearch%5Btype%5D=&PaymentRequestSearch%5Bfname%5D=&PaymentRequestSearch%5Blname%5D=&type=card&sort=payment_request_id");
 			 	try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
@@ -1277,7 +1278,6 @@ public void LoadByCardEU() {
 
 @Test (priority = settings.loadByCardNonEUTest, alwaysRun = true)
 public void LoadByCardNonEU() {	
-	System.out.println("Now on loadByCardNonEUTest");
 	String cardNumber;
 	String inputAmount = "40";
 	double Total;
@@ -1303,9 +1303,9 @@ public void LoadByCardNonEU() {
 			
 		   WebElement SignIn1 = driver.findElement(By.xpath("//*[@id=\"LoginForm\"]/button"));
 		   WebElement Username1 = driver.findElement(By.xpath("//*[@id=\"loginform-login\"]"));
-		   Username1.sendKeys(User);
+		   Username1.sendKeys(NonEUUser);
 		   WebElement Password1 = driver.findElement(By.xpath("//*[@id=\"loginform-password\"]"));
-		   Password1.sendKeys(Pass);
+		   Password1.sendKeys(NonEUPass);
 		   SignIn1.click();
 		   
 		   
@@ -1410,8 +1410,9 @@ public void LoadByCardNonEU() {
 			 	((JavascriptExecutor)driver).executeScript("window.open()");
 			    ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
 			    driver.switchTo().window(tabs.get(1));
-			 	driver.get("https://dev.program.an-other.co.uk/payment-request?PaymentRequestSearch%5Bpayment_request_id%5D=&PaymentRequestSearch%5Bcard_number%5D="+cardNumber+"&PaymentRequestSearch%5Btype%5D=cashflows_payment&PaymentRequestSearch%5Bfname%5D=&PaymentRequestSearch%5Blname%5D=");
-			 	try {
+//			 	driver.get("https://dev.program.an-other.co.uk/payment-request?PaymentRequestSearch%5Bpayment_request_id%5D=&PaymentRequestSearch%5Bcard_number%5D="+cardNumber+"&PaymentRequestSearch%5Btype%5D=cashflows_payment&PaymentRequestSearch%5Bfname%5D=&PaymentRequestSearch%5Blname%5D=");
+			    driver.get("https://dev.program.an-other.co.uk/payment-request?PaymentRequestSearch%5Bpayment_request_id%5D=&PaymentRequestSearch%5Bcard_number%5D="+cardNumber+"&PaymentRequestSearch%5Btype%5D=&PaymentRequestSearch%5Bfname%5D=&PaymentRequestSearch%5Blname%5D=&type=card&sort=payment_request_id");
+			    try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -1497,14 +1498,8 @@ public void LoadByCardNonEU() {
 
 @Test (priority = settings.orderCardTest, alwaysRun = true)	
 public void OrderCardTest(){
-	System.out.println("Now on orderCardTest");
-//	if (driver != null)
-//		driver.quit();
-	
-	  // wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[class='btn btn-primary']"))).click();
-	
-	settings testSettings = new settings();
 	if(testSettings.skipTest("orderCardTest")){
+		System.out.println("Now on orderCardTest");
 		WebDriver driver= new ChromeDriver();
 		wait = new WebDriverWait(driver, 20);   
 		   
